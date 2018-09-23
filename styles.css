@@ -1,0 +1,80 @@
+html, body {
+  font-family: Avenir,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-size: 18px;
+  color: #644d52;
+}
+
+main {
+  max-width: 800px;
+  margin: 24px auto;
+}
+
+button {
+  border: 0;
+  border-radius: 4px;
+  padding: 12px;
+  background-color: #644d52;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 100;
+}
+
+.list {
+  width: 300px;
+  margin: 0 auto;
+  margin-bottom: 48px;
+}
+
+.list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.list li {
+  border: 1px solid #ddd;
+  padding: 24px;
+  width: 300px;
+  margin-bottom: 6px;
+}
+.list li.started {
+  border: 1px solid #d295e6;
+}
+.list li.started button[data-phocus-action="finish"] {
+  display: inline-block;
+}
+.list li.started button[data-phocus-action="start"] {
+  display: none;
+}
+.list li.finished {
+  opacity: 0.5;
+}
+.list li.finished button[data-phocus-action="start"] {
+  display: none;
+}
+.list li .buttons {
+  float: right;
+  margin-top: -8px;
+  margin-right: -8px;
+}
+button[data-phocus-action="delete"] {
+  background-color: #89192f;
+  font-size: 20px;
+  vertical-align: bottom;
+  line-height: 18px;
+}
+button[data-phocus-action="finish"] {
+  background-color: #01530d;
+  display: none;
+}
+
+.descriptive-text {
+  margin-bottom: 48px;
+}
+.descriptive-text ul li {
+  margin-bottom: 12px;
+}
+
+footer {
+  font-size: 14px;
+  margin-top: 48px;
+}
