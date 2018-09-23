@@ -10,6 +10,7 @@ main {
 }
 
 button {
+  font-family: Avenir,Helvetica Neue,Helvetica,Arial,sans-serif;
   border: 0;
   border-radius: 4px;
   padding: 12px;
@@ -20,7 +21,7 @@ button {
 }
 
 .list {
-  width: 300px;
+  width: 350px;
   margin: 0 auto;
   margin-bottom: 48px;
 }
@@ -58,13 +59,27 @@ button {
 }
 button[data-phocus-action="delete"] {
   background-color: #89192f;
-  font-size: 20px;
+  font-size: 24px;
   vertical-align: bottom;
-  line-height: 18px;
+  line-height: 22px;
+  content: "&times;";
 }
 button[data-phocus-action="finish"] {
   background-color: #01530d;
   display: none;
+}
+
+.new-item-form {
+  display: flex;
+}
+input {
+  font-family: Avenir,Helvetica Neue,Helvetica,Arial,sans-serif;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex: 1;
+  margin-right: 6px;
+  font-size: 18px;
+  padding: 24px;
 }
 
 .descriptive-text {

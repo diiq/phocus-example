@@ -1,27 +1,46 @@
-import { Action, ActionContextService, startPhocus, ConstrainFocusService } from "phocus";
+import {
+  Action,
+  ActionContextService,
+  startPhocus,
+  ConstrainFocusService
+} from "phocus";
 
 var maxId = 3;
 
 ActionContextService.addContext("todo-list", {
   actions: {
     add: new Action({
-      name: "Add Todo Item",
+      name: "Add Todo",
       defaultKeys: ["Control+n"],
+      actOn: () => {
+        document.getElementById("form").focus();
+      }
+    })
+  }
+});
+
+ActionContextService.addContext("todo-item-form", {
+  actions: {
+    add: new Action({
+      name: "Add Todo",
+      defaultKeys: ["Enter"],
       actOn: (_, elt) => {
         // Get a new event "from the API"
         const newId = ++maxId;
         // You should use a frontend framework for this sort of thing,
         // I'm simplifying so you can see just what Phocus is doing.
-        elt.querySelector("ul").innerHTML +=
-          `<li tabindex="0" data-phocus-context-name="todo-item" data-phocus-context-argument="1">
-             Item ${newId}
-             <div class="buttons">
-               <button data-phocus-action="start"></button>
-               <button data-phocus-action="finish"></button>
-               <button data-phocus-action="delete">&times;</button>
-             </div>
+        const input = document.getElementById("form");
+        const list = document.querySelector(".list ul");
+        list.innerHTML += `<li tabindex="0" data-phocus-context-name="todo-item" data-phocus-context-argument="${newId}">
+            ${input.value}
+            <div class="buttons">
+              <button data-phocus-action="start"></button>
+              <button data-phocus-action="finish"></button>
+              <button data-phocus-action="delete">&times;</button>
+            </div>
           </li>`;
-          elt.querySelector("ul").lastChild.focus();
+        input.value = "";
+        list.lastChild.focus();
       }
     })
   }

@@ -1,10 +1,11 @@
 {
   "name": "phocus-example",
   "version": "1.0.0",
-  "description": "",
+  "description": "A todo list example of Phocus",
+  "repository": "https://github.com/diiq/phocus-example",
   "main": "index.js",
   "dependencies": {
-    "phocus": "file:../phocus"
+    "phocus": "^1.0"
   },
   "devDependencies": {
     "webpack": "^4.19.1",
