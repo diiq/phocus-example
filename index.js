@@ -1,11 +1,18 @@
-import {
-  Action,
-  ActionContextService,
-  startPhocus,
-  ConstrainFocusService
-} from "phocus";
+import { Action, ActionContextService, startPhocus } from "phocus";
 
-var maxId = 3;
+/*
+You should use a frontend framework! This tiny todo app uses Phocus all by
+itself so that you can see what Phocus can do; but you should NOT use Phocus by
+itself. Use it with React or Angular or something, OK?
+
+I'm logging to the console instead of interacting with a real API, but the
+principle's the same -- you've got the relevant id, so you can make the relevant
+request.
+
+*/
+
+// First, we'll set up some contexts. One for the whole list, one for the form,
+// and one that represents an individual todo item.
 
 ActionContextService.addContext("todo-list", {
   actions: {
@@ -19,6 +26,9 @@ ActionContextService.addContext("todo-list", {
   }
 });
 
+// Standing in for "the API" today is "the number 3":
+var maxId = 3;
+
 ActionContextService.addContext("todo-item-form", {
   actions: {
     add: new Action({
@@ -27,6 +37,7 @@ ActionContextService.addContext("todo-item-form", {
       actOn: (_, elt) => {
         // Get a new event "from the API"
         const newId = ++maxId;
+
         // You should use a frontend framework for this sort of thing,
         // I'm simplifying so you can see just what Phocus is doing.
         const input = document.getElementById("form");

@@ -48,14 +48,15 @@ button {
 }
 .list li.finished {
   opacity: 0.5;
+  text-decoration: line-through;
 }
 .list li.finished button[data-phocus-action="start"] {
   display: none;
 }
 .list li .buttons {
   float: right;
-  margin-top: -8px;
-  margin-right: -8px;
+  margin-top: -10px;
+  margin-right: -10px;
 }
 button[data-phocus-action="delete"] {
   background-color: #89192f;
