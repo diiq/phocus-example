@@ -42,7 +42,7 @@ ActionContextService.addContext("todo-item-form", {
         // I'm simplifying so you can see just what Phocus is doing.
         const input = document.getElementById("form");
         const list = document.querySelector(".list ul");
-        list.innerHTML += `<li tabindex="0" data-phocus-context-name="todo-item" data-phocus-context-argument="${newId}">
+        list.innerHTML += `<li tabindex="0" data-phocus-context-name="todo-item" data-phocus-context-argument="${newId}" id="todo-item-${newId}"}>
             ${input.value}
             <div class="buttons">
               <button data-phocus-action="start"></button>
@@ -51,7 +51,7 @@ ActionContextService.addContext("todo-item-form", {
             </div>
           </li>`;
         input.value = "";
-        list.lastChild.focus();
+        input.focus();
       }
     })
   }
@@ -87,19 +87,30 @@ ActionContextService.addContext("todo-item", {
         // Send a delete event to the API, or whatever you like
         console.log(`Delete item ${id}`);
         // Update the UI
+        const current = document.getElementById(`todo-item-${id}`);
+        const previous = current.previousElementSibling;
+        const next = current.nextElementSibling;
+        if (previous) {
+          previous.focus();
+        } else if (next) {
+          next.focus();
+        } else {
+          ActionContextService.triggerAction("add");
+        }
+        //
         elt.remove();
       }
     }),
     next: new Action({
       name: "Next",
-      defaultKeys: ["ArrowDown", "k"],
+      defaultKeys: ["ArrowDown", "j"],
       actOn: (id, elt) => {
         elt.nextElementSibling && elt.nextElementSibling.focus();
       }
     }),
     previous: new Action({
       name: "previous",
-      defaultKeys: ["ArrowUp", "j"],
+      defaultKeys: ["ArrowUp", "k"],
       actOn: (id, elt) => {
         elt.previousElementSibling && elt.previousElementSibling.focus();
       }
