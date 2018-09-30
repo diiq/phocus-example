@@ -180,6 +180,7 @@ function renderItem(item) {
     data-phocus-id="todo-item-${item.id}"
     data-phocus-context-name="todo-item"
     data-phocus-context-argument="${item.id}"
+    data-phocus-on-mouseover="true"
     class="${item.status}">
       ${item.name}
       <div class="buttons">
