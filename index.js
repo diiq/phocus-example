@@ -136,7 +136,6 @@ function makeTodoItem(name) {
   return it;
 }
 
-
 makeTodoItem("Make trouble");
 makeTodoItem("Walk the lobster");
 makeTodoItem("Sing the body electric");
@@ -190,4 +189,3 @@ function renderItem(item) {
       </div>
     </li>`;
 }
-

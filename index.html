@@ -37,7 +37,13 @@
             start a task, or 'backspace' to delete one.</li>
           <li>Try using the arrow keys, or j and k, to move between list items, or Control+n to focus on the new item
             input</li>
-          <li><span tabindex="0" data-phocus-id="todo-item-2" style="color: blue">This text</span> has the same phocus-id as one of the
+          <li>For todo items, hover and focus have been unified. This is scary
+            and dangerous, but useful for allowing keyboard shortcuts to apply to
+            the object under the mouse. Otherwise, one item can have focus while
+            another has hover, and it's unclear which will receive the
+            action.</li>
+          <li><span tabindex="0" data-phocus-id="todo-item-2" style="color: blue">This text</span> has the same
+            phocus-id as one of the
             todo items, but phocus never mistakenly focuses on it instead.</li>
           <li>In the source, none of these buttons have text; empty buttons are given default labels by Phocus.</li>
           <li>Buttons are given aria labels and tooltips which describe their behavior, and any relevant keyboard
