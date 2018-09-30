@@ -153,13 +153,18 @@ function renderList(fid) {
     .map(id => renderItem(todoList[id]))
     .join("");
 
-  if (oldFocus) {
-    focusInContext(oldFocus, list);
-  } else if (fid) {
-    focusInContext(`todo-item-${fid}`, list);
-  } else {
-    ActionContextService.setContext(list);
-  }
+  // This nonsense would not be necessary if using a real frontend framework.
+  // This business of 'rerender it all every change' is not particularly
+  // sustainable, just simple.
+  setTimeout(() => {
+    if (oldFocus) {
+      focusInContext(oldFocus, list);
+    } else if (fid) {
+      focusInContext(`todo-item-${fid}`, list);
+    } else {
+      ActionContextService.setContext(list);
+    }
+  }, 100);
 }
 
 function getNextItem(id) {
