@@ -15,37 +15,10 @@
   <main>
     <h1>Phocus: Todo List Example</h1>
 
-    <div data-phocus-context-name="todo-list" id="list" class="list">
-      <ul>
-        <li tabindex="0" data-phocus-context-name="todo-item" data-phocus-context-argument="1" id="todo-item-1">
-          Eat good cheese
-          <div class="buttons">
-            <button data-phocus-action="start"></button>
-            <button data-phocus-action="finish"></button>
-            <button data-phocus-action="delete">&times;</button>
-          </div>
-        </li>
-
-        <li tabindex="0" data-phocus-context-name="todo-item" data-phocus-context-argument="2" id="todo-item-2">
-          Sleep in a hammock
-          <div class="buttons">
-            <button data-phocus-action="start"></button>
-            <button data-phocus-action="finish"></button>
-            <button data-phocus-action="delete">&times;</button>
-          </div>
-        </li>
-
-        <li tabindex="0" data-phocus-context-name="todo-item" data-phocus-context-argument="3" id="todo-item-3">
-          Hug the moon
-          <div class="buttons">
-            <button data-phocus-action="start"></button>
-            <button data-phocus-action="finish"></button>
-            <button data-phocus-action="delete">&times;</button>
-          </div>
-        </li>
-      </ul>
+    <div data-phocus-context-name="todo-list" class="list">
+      <ul id="list"></ul>
       <div data-phocus-context-name="todo-item-form" class="new-item-form">
-        <input type="text" id="form" />
+        <input type="text" id="new-item-form" data-phocus-id="new-item-form" />
         <button data-phocus-action="add"></button>
       </div>
     </div>
@@ -64,8 +37,10 @@
             start a task, or 'backspace' to delete one.</li>
           <li>Try using the arrow keys, or j and k, to move between list items, or Control+n to focus on the new item
             input</li>
+          <li><span tabindex="0" data-phocus-id="todo-item-2" style="color: blue">This text</span> has the same phocus-id as one of the
+            todo items, but phocus never mistakenly focuses on it instead.</li>
           <li>In the source, none of these buttons have text; empty buttons are given default labels by Phocus.</li>
-          <li>Buttons are given aria labels and tooltips which describe their behavior, and a relevant keyboard
+          <li>Buttons are given aria labels and tooltips which describe their behavior, and any relevant keyboard
             shortcut. A screenreader will read the &times; button as "Delete (backspace)".</li>
         </ul>
       </p>

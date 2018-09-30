@@ -1,4 +1,9 @@
-import { Action, ActionContextService, startPhocus } from "phocus";
+import {
+  Action,
+  ActionContextService,
+  startPhocus,
+  focusInContext
+} from "phocus";
 
 /*
 You should use a frontend framework! This tiny todo app uses Phocus all by
@@ -11,6 +16,8 @@ request.
 
 */
 
+var todoList = {};
+
 // First, we'll set up some contexts. One for the whole list, one for the form,
 // and one that represents an individual todo item.
 
@@ -19,8 +26,8 @@ ActionContextService.addContext("todo-list", {
     add: new Action({
       name: "Add Todo",
       defaultKeys: ["Control+n"],
-      actOn: () => {
-        document.getElementById("form").focus();
+      actOn: (_, elt) => {
+        focusInContext("new-item-form", elt);
       }
     })
   }
@@ -36,22 +43,11 @@ ActionContextService.addContext("todo-item-form", {
       defaultKeys: ["Enter"],
       actOn: (_, elt) => {
         // Get a new event "from the API"
-        const newId = ++maxId;
-
-        // You should use a frontend framework for this sort of thing,
-        // I'm simplifying so you can see just what Phocus is doing.
-        const input = document.getElementById("form");
-        const list = document.querySelector(".list ul");
-        list.innerHTML += `<li tabindex="0" data-phocus-context-name="todo-item" data-phocus-context-argument="${newId}" id="todo-item-${newId}"}>
-            ${input.value}
-            <div class="buttons">
-              <button data-phocus-action="start"></button>
-              <button data-phocus-action="finish"></button>
-              <button data-phocus-action="delete">&times;</button>
-            </div>
-          </li>`;
+        const input = document.getElementById("new-item-form");
+        makeTodoItem(input.value);
         input.value = "";
         input.focus();
+        renderList();
       }
     })
   }
@@ -63,62 +59,134 @@ ActionContextService.addContext("todo-item", {
       name: "Start",
       defaultKeys: ["s"],
       actOn: (id, elt) => {
-        // Send a delete event to the API, or whatever you like
-        console.log(`Start item ${id}`);
-        // Update the UI
-        elt.classList.add("started");
+        // Here's where you'd send a start event to the API, if you had an API
+        console.log(`API: Start item ${id}`);
+        todoList[id].status = "started";
+        renderList(id);
       }
     }),
     finish: new Action({
       name: "Finish",
       defaultKeys: ["f"],
       actOn: (id, elt) => {
-        // Send a delete event to the API, or whatever you like
-        console.log(`Finish item ${id}`);
-        // Update the UI
-        elt.classList.remove("started");
-        elt.classList.add("finished");
+        // Here's where you'd send a finish event to the API, if you had an API
+        console.log(`API: Finish item ${id}`);
+        todoList[id].status = "finished";
+        renderList(id);
       }
     }),
     delete: new Action({
       name: "Delete",
       defaultKeys: ["Backspace"],
       actOn: (id, elt) => {
-        // Send a delete event to the API, or whatever you like
+        // Here's where you'd send a delete event to the API, if you had an API
         console.log(`Delete item ${id}`);
-        // Update the UI
-        const current = document.getElementById(`todo-item-${id}`);
-        const previous = current.previousElementSibling;
-        const next = current.nextElementSibling;
-        if (previous) {
-          previous.focus();
+
+        // Update focus
+        const prev = getPreviousItem(id);
+        const next = getNextItem(id);
+        if (prev) {
+          focusInContext(`todo-item-${prev.id}`, elt);
         } else if (next) {
-          next.focus();
+          focusInContext(`todo-item-${next.id}`, elt);
         } else {
-          ActionContextService.triggerAction("add");
+          focusInContext("new-item-form", elt);
         }
-        //
-        elt.remove();
+
+        // Update UI
+        delete todoList[id];
+        renderList();
       }
     }),
     next: new Action({
       name: "Next",
       defaultKeys: ["ArrowDown", "j"],
       actOn: (id, elt) => {
-        elt.nextElementSibling && elt.nextElementSibling.focus();
+        const next = getNextItem(id);
+        if (next) focusInContext(`todo-item-${next.id}`, elt);
       }
     }),
     previous: new Action({
       name: "previous",
       defaultKeys: ["ArrowUp", "k"],
       actOn: (id, elt) => {
-        elt.previousElementSibling && elt.previousElementSibling.focus();
+        const prev = getPreviousItem(id);
+        if (prev) focusInContext(`todo-item-${prev.id}`, elt);
       }
     })
   }
 });
 
 window.addEventListener("load", () => {
+  renderList();
   startPhocus(document.body);
   document.querySelector("li").focus();
 });
+
+// MODEL
+maxId = 1;
+function makeTodoItem(name) {
+  maxId++;
+  const it = {
+    id: maxId.toString(),
+    name: name,
+    status: "todo"
+  };
+  todoList[maxId.toString()] = it;
+  return it;
+}
+
+
+makeTodoItem("Make trouble");
+makeTodoItem("Walk the lobster");
+makeTodoItem("Sing the body electric");
+
+// RENDERING
+// You should use a frontend framework for this sort of thing, I'm simplifying
+// so you can see what Phocus is doing without the complexity of a framework.
+
+function renderList(fid) {
+  const oldFocus = document.activeElement.dataset.phocusId;
+  const list = document.getElementById("list");
+  list.innerHTML = Object.keys(todoList)
+    .sort()
+    .map(id => renderItem(todoList[id]))
+    .join("");
+
+  if (oldFocus) {
+    focusInContext(oldFocus, list);
+  } else if (fid) {
+    focusInContext(`todo-item-${fid}`, list);
+  } else {
+    ActionContextService.setContext(list);
+  }
+}
+
+function getNextItem(id) {
+  const ids = Object.keys(todoList).sort();
+  const current = ids.findIndex(i => i === id);
+  if (ids.length > current + 1) return todoList[ids[current + 1]];
+}
+
+function getPreviousItem(id) {
+  const ids = Object.keys(todoList).sort();
+  const current = ids.findIndex(i => i === id);
+  if (current > 0) return todoList[ids[current - 1]];
+}
+
+function renderItem(item) {
+  return `<li
+    tabindex="0"
+    data-phocus-id="todo-item-${item.id}"
+    data-phocus-context-name="todo-item"
+    data-phocus-context-argument="${item.id}"
+    class="${item.status}">
+      ${item.name}
+      <div class="buttons">
+        <button data-phocus-action="start"></button>
+        <button data-phocus-action="finish"></button>
+        <button data-phocus-action="delete">&times;</button>
+      </div>
+    </li>`;
+}
+
