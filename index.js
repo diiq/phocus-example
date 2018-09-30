@@ -33,9 +33,6 @@ ActionContextService.addContext("todo-list", {
   }
 });
 
-// Standing in for "the API" today is "the number 3":
-var maxId = 3;
-
 ActionContextService.addContext("todo-item-form", {
   actions: {
     add: new Action({
@@ -45,9 +42,9 @@ ActionContextService.addContext("todo-item-form", {
         // Get a new event "from the API"
         const input = document.getElementById("new-item-form");
         makeTodoItem(input.value);
+        renderList();
         input.value = "";
         input.focus();
-        renderList();
       }
     })
   }
@@ -124,6 +121,10 @@ window.addEventListener("load", () => {
 });
 
 // MODEL
+// In a real app this'd be connected to an API, and there'd be
+// multiple lists and all kinds of good stuff; this is not the best app in the
+// world; this is only a tribu^H^H^H^H^H demo.
+
 maxId = 1;
 function makeTodoItem(name) {
   maxId++;
