@@ -125,7 +125,7 @@ window.addEventListener("load", () => {
 // multiple lists and all kinds of good stuff; this is not the best app in the
 // world; this is only a tribu^H^H^H^H^H demo.
 
-maxId = 1;
+var maxId = 1;
 function makeTodoItem(name) {
   maxId++;
   const it = {
