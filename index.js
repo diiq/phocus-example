@@ -59,7 +59,8 @@ ActionContextService.addContext("todo-item", {
         // Here's where you'd send a start event to the API, if you had an API
         console.log(`API: Start item ${id}`);
         todoList[id].status = "started";
-        renderList(id);
+        elt.classList.add("started");
+        elt.classList.remove("todo");
       }
     }),
     finish: new Action({
@@ -69,7 +70,8 @@ ActionContextService.addContext("todo-item", {
         // Here's where you'd send a finish event to the API, if you had an API
         console.log(`API: Finish item ${id}`);
         todoList[id].status = "finished";
-        renderList(id);
+        elt.classList.add("finished");
+        elt.classList.remove("started");
       }
     }),
     delete: new Action({
