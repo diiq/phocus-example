@@ -12,30 +12,60 @@ main {
 button {
   font-family: Avenir,Helvetica Neue,Helvetica,Arial,sans-serif;
   border: 0;
-  border-radius: 4px;
+  border-radius: 0;
   padding: 12px;
-  background-color: #644d52;
+  background-color: #47a501;
   color: #fff;
   font-size: 16px;
   font-weight: 100;
+  line-height: 18px;
+  cursor: pointer;
+}
+button:hover {
+  padding: 14px;
+  margin: -2px;
 }
 
 .list {
   width: 350px;
-  margin: 0 auto;
-  margin-bottom: 48px;
+  margin: 48px;
+  padding: 48px;
+  border: 1px solid #ddd;
+  position: relative
+}
+.list:focus-within {
+  border: 1px solid #888;
+}
+.list:focus-within .active {
+  display: block;
+}
+.active {
+  display: none;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  font-size: 10px;
 }
 
 .list ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .list li {
   border: 1px solid #ddd;
-  padding: 24px;
-  width: 300px;
+  width: 350px;
   margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.list li:focus {
+  border: 1px solid #00a5ff;
+}
+.list li span {
+  padding: 12px;
 }
 .list li.started {
   border: 1px solid #d295e6;
@@ -54,19 +84,22 @@ button {
   display: none;
 }
 .list li .buttons {
-  float: right;
-  margin-top: -10px;
-  margin-right: -10px;
+  display: flex;
+
 }
 button[data-phocus-action="delete"] {
-  background-color: #89192f;
+  background-color: #810116;
+  color: #fff;
+  border: none;
   font-size: 24px;
   vertical-align: bottom;
   line-height: 22px;
   content: "&times;";
 }
 button[data-phocus-action="finish"] {
-  background-color: #01530d;
+  background-color: #d47b02;
+  color: #fff;
+  border: none;
   display: none;
 }
 
@@ -76,11 +109,12 @@ button[data-phocus-action="finish"] {
 input {
   font-family: Avenir,Helvetica Neue,Helvetica,Arial,sans-serif;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  box-shadow: 2px 2px 2px inset rgba(0, 0, 0, 0.2);
+  border-radius: #ddd;
   flex: 1;
-  margin-right: 6px;
+  margin-right: 0;
   font-size: 18px;
-  padding: 24px;
+  padding: 12px;
 }
 
 .descriptive-text {

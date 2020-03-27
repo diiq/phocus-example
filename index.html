@@ -16,6 +16,7 @@
     <h1>Phocus: Todo List Example</h1>
 
     <div data-phocus-context-name="todo-list" class="list">
+      <div class="active">Example has focus</div>
       <ul id="list"></ul>
       <div data-phocus-context-name="todo-item-form" class="new-item-form">
         <input type="text" id="new-item-form" data-phocus-id="new-item-form" />
@@ -33,18 +34,17 @@
 
       <p>Things to note:
         <ul>
-          <li>Todo items are focusable, and when focused, you can use contextual hotkeys to manipulate them; try 's' to
-            start a task, or 'backspace' to delete one.</li>
-          <li>Try using the arrow keys, or j and k, to move between list items, or Control+n to focus on the new item
-            input</li>
+          <li><strong>Try using the arrow keys, or j and k, to move between list items</strong></li>
+          <li>Todo items are focusable, and when focused, you can use contextual hotkeys to manipulate them; <strong>try 's' to
+            start a task, or 'backspace' to delete one.</strong></li>
+          <li>Use <strong>Alt+n to create a new item</strong> by focusing on the input</li>
           <li>For todo items, hover and focus have been unified. This is scary
             and dangerous, but useful for allowing keyboard shortcuts to apply to
             the object under the mouse. Otherwise, one item can have focus while
             another has hover, and it's unclear which will receive the
-            action.</li>
+            action. Pulling this stunt is optional in Phocus, and not the default.</li>
           <li><span tabindex="0" data-phocus-id="todo-item-2" style="color: blue">This text</span> has the same
-            phocus-id as one of the
-            todo items, but phocus never mistakenly focuses on it instead.</li>
+            phocus-id as one of the todo items, but phocus never mistakenly focuses on it instead.</li>
           <li>In the source, none of these buttons have text; empty buttons are given default labels by Phocus.</li>
           <li>Buttons are given aria labels and tooltips which describe their behavior, and any relevant keyboard
             shortcut. A screenreader will read the &times; button as "Delete (backspace)".</li>

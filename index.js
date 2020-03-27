@@ -25,8 +25,9 @@ ActionContextService.addContext("todo-list", {
   actions: {
     add: new Action({
       name: "Add Todo",
-      defaultKeys: ["Control+n"],
-      actOn: (_, elt) => {
+      defaultKeys: ["Alt+n"],
+      actOn: (e, elt) => {
+        console.log("OK")
         focusInContext("new-item-form", elt);
       }
     })
@@ -189,7 +190,7 @@ function renderItem(item) {
     data-phocus-context-argument="${item.id}"
     data-phocus-on-mouseover="true"
     class="${item.status}">
-      ${item.name}
+      <span>${item.name}</span>
       <div class="buttons">
         <button data-phocus-action="start"></button>
         <button data-phocus-action="finish"></button>
